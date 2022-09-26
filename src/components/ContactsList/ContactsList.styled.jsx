@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const List = styled.ul`
   list-style: square;
+  padding-left: 20px;
 `;
 
 export const Item = styled.li`
