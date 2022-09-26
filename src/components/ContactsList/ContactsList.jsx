@@ -1,10 +1,27 @@
-import {List} from '../ContactsList/ContactsList.styled'
+import PropTypes from 'prop-types';
+import {
+    List,
+    Item,
+    Description,
+    Button
+} from '../ContactsList/ContactsList.styled'
 
-export const ContactsList = ({ items }) => {
-    const elements = items.map(({ name, number, id }) => {
-        return <li key={id}>{name}: {number}</li>
-    })
+export const ContactsList = ({ filteredContacts, removeContact}) => {
+
     return (
-    <List>{elements}</List>
-)
+        <List>
+            {filteredContacts.map(({ name, number, id }) => {
+            return(
+                <Item key={id}>
+                    <Description> {name}: {number}</Description>
+                    <Button onClick={()=> removeContact(id)}>Delete</Button>
+                </Item>)
+        })}
+        </List>
+    )
+}
+
+ContactsList.propTypes = {
+    filteredContacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+    removeContact: PropTypes.func.isRequired,
 }

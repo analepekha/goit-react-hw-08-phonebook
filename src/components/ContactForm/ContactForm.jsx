@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
-import { Form, Label, Input, Button} from '../App.styled';
+import { Form, Label, Input, Button} from './ContactForm.styled';
 
 
-export class FormWrap extends Component {
+export class ContactForm extends Component {
     state = {
       name: '',
       number: ''
@@ -33,10 +33,11 @@ export class FormWrap extends Component {
     };
     
     render() {
-        const { name, number } = this.state;
+      const { name, number } = this.state;
+      const { handleSubmit, handleChange} = this;
 
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <Label htmlFor={this.nameInputId}>Name</Label>
               <Input
                 type="text"
@@ -45,7 +46,7 @@ export class FormWrap extends Component {
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                 title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 id={this.nameInputId}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 required
                 />
             <Label htmlFor={this.numberInputId}>Number</Label>
@@ -56,7 +57,7 @@ export class FormWrap extends Component {
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               id={this.numberInputId}
-              onChange={this.handleChange}
+              onChange={handleChange}
               required
             />
               <Button type="submit">Add contact</Button>
@@ -65,6 +66,6 @@ export class FormWrap extends Component {
     }
 }
 
-FormWrap.propTypes = {
+ContactForm.propTypes = {
     addContact: PropTypes.func.isRequired,
 }

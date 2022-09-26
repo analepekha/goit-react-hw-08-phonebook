@@ -1,12 +1,11 @@
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
 import { Container } from './App.styled';
 import { Title} from './App.styled';
-import { FormWrap } from './Form/Form';
+import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
+import { Section } from './Section/Section';
 import { nanoid } from 'nanoid';
-// import { Formik } from 'formik';
 
 
 export class App extends Component {
@@ -22,6 +21,9 @@ export class App extends Component {
 
   addContact = contact => {
     console.log(contact);
+    if (this.checkDublicateContact(contact)) {
+      return alert(`${contact.name} is already in contacts`)
+    }
     const newContact = {
       id: nanoid(),
       ...contact,
@@ -31,19 +33,54 @@ export class App extends Component {
     }))
   }
 
-  findContact = data => {
-    console.log(data);
+  removeContact=(id) =>{
+    this.setState(prevState => {
+      const newContact = prevState.contacts.filter(((item) => item.id !== id))
+      return {
+        contacts: newContact
+      }
+    })
+  }
+
+  handleChangeFilter = e => {
+        const {name, value} = e.currentTarget
+        this.setState({[name]: value})
+    };
+
+  findContact () {
+    const { contacts, filter } = this.state;
+    if (!filter) {
+      return contacts;
+    }
+    const normalizedFilter = filter.toLocaleLowerCase();
+    const filteredContacts = contacts.filter(({ name, number }) => {
+      const normalizedName = name.toLocaleLowerCase();
+      const resultOfFilter = normalizedName.includes(normalizedFilter) || number.includes(normalizedFilter);
+      return resultOfFilter;
+    })
+    return filteredContacts;
+  }
+
+  checkDublicateContact({name, number}) {
+    const { contacts } = this.state;
+    const resultOfCheck = contacts.find(contact => 
+      contact.name===name || contact.number===number
+    )
+    return resultOfCheck;
   }
 
   render() {
-    const { contacts } = this.state;
+    const { filter } = this.state;
+    const { addContact, handleChangeFilter, removeContact } = this;
+    const filteredContacts = this.findContact();
     return(
       <Container>
         <Title>Phonebook</Title>
-        <FormWrap addContact={this.addContact} />
-        <Title>Contacts</Title>
-        <Filter findContact={ this.findContact} />
-        <ContactsList items={ contacts} />
+        <ContactForm addContact={addContact} />
+        <Section title={'Contacts'}>
+          <Filter value={filter} handleChangeFilter={handleChangeFilter} />
+          <ContactsList filteredContacts={filteredContacts} removeContact={removeContact} />
+        </Section>
       </Container>
     )
   } 
