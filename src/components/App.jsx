@@ -18,7 +18,25 @@ export class App extends Component {
     ],
     filter: '',
   }
+  
+  componentDidMount() {
+    console.log('componentDidMount');
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (contacts?.length) {
+      this.setState({
+        contacts,
+      })
+    }
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    console.log('componentDidUpdate', prevProps, prevState);
+    if (prevState.contacts !== contacts) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
+  
   addContact = contact => {
     console.log(contact);
     if (this.checkDublicateContact(contact)) {
