@@ -7,7 +7,6 @@ import {
 } from '../ContactsList/ContactsList.styled'
 
 export const ContactsList = ({ filteredContacts, removeContact}) => {
-
     return (
         <List>
             {filteredContacts.map(({ name, number, id }) => {

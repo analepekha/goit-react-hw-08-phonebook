@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { Container } from './App.styled';
 import { Title} from './App.styled';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -6,67 +5,47 @@ import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import { Section } from './Section/Section';
 import { nanoid } from 'nanoid';
+import { useState, useEffect } from 'react';
 
 
-export class App extends Component {
-  state = {
-    contacts: [
-      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ],
-    filter: '',
-  }
+
+export function App() {
+  const [contacts, setContacts] = useState(() => {
+    const value = JSON.parse(localStorage.getItem('contacts'));
+    return value ?? []
+  });
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));  
+  })
   
-  componentDidMount() {
-    console.log('componentDidMount');
-    const contacts = JSON.parse(localStorage.getItem('contacts'));
-    if (contacts?.length) {
-      this.setState({
-        contacts,
-      })
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-    console.log('componentDidUpdate', prevProps, prevState);
-    if (prevState.contacts !== contacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }
-  
-  addContact = contact => {
-    console.log(contact);
-    if (this.checkDublicateContact(contact)) {
+  const addContact = (contact) => {
+    if (checkDublicateContact(contact)) {
       return alert(`${contact.name} is already in contacts`)
     }
-    const newContact = {
-      id: nanoid(),
-      ...contact,
-    }
-    this.setState(prevState => ({
-      contacts: [newContact, ...prevState.contacts ]
-    }))
-  }
-
-  removeContact=(id) =>{
-    this.setState(prevState => {
-      const newContact = prevState.contacts.filter(((item) => item.id !== id))
-      return {
-        contacts: newContact
+    setContacts((prevState) => {
+      const newContact = {
+          id: nanoid(),
+          ...contact
       }
+      return [...prevState, newContact]
     })
   }
 
-  handleChangeFilter = e => {
-        const {name, value} = e.currentTarget
-        this.setState({[name]: value})
+  const removeContact = (id) => {
+    setContacts(prevState => {
+      const newContact = prevState.filter(((item) => item.id !== id))
+      return newContact;
+    })
+  }
+
+  const handleChangeFilter = e => {
+    const { value } = e.currentTarget
+    setFilter(value);
     };
 
-  findContact () {
-    const { contacts, filter } = this.state;
+  const findContact =() =>{
     if (!filter) {
       return contacts;
     }
@@ -79,27 +58,23 @@ export class App extends Component {
     return filteredContacts;
   }
 
-  checkDublicateContact({name, number}) {
-    const { contacts } = this.state;
+  const checkDublicateContact= ({name, number}) => {
     const resultOfCheck = contacts.find(contact => 
       contact.name===name || contact.number===number
     )
     return resultOfCheck;
   }
-
-  render() {
-    const { filter } = this.state;
-    const { addContact, handleChangeFilter, removeContact } = this;
-    const filteredContacts = this.findContact();
+  const filteredContacts = findContact();
+  
     return(
       <Container>
         <Title>Phonebook</Title>
         <ContactForm addContact={addContact} />
         <Section title={'Contacts'}>
           <Filter value={filter} handleChangeFilter={handleChangeFilter} />
-          <ContactsList filteredContacts={filteredContacts} removeContact={removeContact} />
+          {contacts.length === 0 ? (<p>Contacts list is empty! Try to add contact</p>) :
+          (<ContactsList filteredContacts={filteredContacts} removeContact={removeContact} />)}
         </Section>
       </Container>
     )
-  } 
 };
