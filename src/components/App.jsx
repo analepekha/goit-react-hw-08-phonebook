@@ -7,8 +7,6 @@ import { Section } from './Section/Section';
 import { nanoid } from 'nanoid';
 import { useState, useEffect } from 'react';
 
-
-
 export function App() {
   const [contacts, setContacts] = useState(() => {
     const value = JSON.parse(localStorage.getItem('contacts'));
@@ -17,8 +15,8 @@ export function App() {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));  
-  })
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
   
   const addContact = (contact) => {
     if (checkDublicateContact(contact)) {
