@@ -6,10 +6,10 @@ import {
     Button
 } from '../ContactsList/ContactsList.styled'
 
-export const ContactsList = ({ filteredContacts, removeContact}) => {
+export const ContactsList = ({ items, removeContact }) => {
     return (
         <List>
-            {filteredContacts.map(({ name, number, id }) => {
+            {items.map(({ name, number, id }) => {
             return(
                 <Item key={id}>
                     <Description> {name}: {number}</Description>
@@ -21,6 +21,10 @@ export const ContactsList = ({ filteredContacts, removeContact}) => {
 }
 
 ContactsList.propTypes = {
-    filteredContacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-    removeContact: PropTypes.func.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+    })),
+    // removeContact: PropTypes.func.isRequired,
 }
