@@ -14,6 +14,7 @@ export const Filter = ({value, handleChangeFilter}) => {
                 value={value}
                 id={searchContactId}
                 onChange={handleChangeFilter}
+                placeholder='Search'
             />
         </FilterWrap>
 )
