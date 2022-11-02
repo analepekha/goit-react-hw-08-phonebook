@@ -1,9 +1,22 @@
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from "react-redux";
+import { getFilter } from 'redux/filter/filter-selectors';
+import { setFilter } from 'redux/filter/filter-slice';
+
 import { FilterWrap, LabelFilter, InputFilter } from './Filter.styled';
 
-export const Filter = ({value, handleChangeFilter}) => {
+export const Filter = () => {
+
+    const filter = useSelector(getFilter);
+    const dispatch = useDispatch();
+
     const searchContactId = nanoid();
+
+    const handleChangeFilter = e => {
+        const { value } = e.target;
+        dispatch(setFilter(value));
+    };
+    
 
     return(
         <FilterWrap>
@@ -11,7 +24,7 @@ export const Filter = ({value, handleChangeFilter}) => {
             <InputFilter
                 type="text"
                 name='filter'
-                value={value}
+                value={filter}
                 id={searchContactId}
                 onChange={handleChangeFilter}
                 placeholder='Search'
@@ -20,7 +33,3 @@ export const Filter = ({value, handleChangeFilter}) => {
 )
 }
 
-Filter.propTypes = {
-    handleChangeFilter: PropTypes.func.isRequired,
-     value: PropTypes.string.isRequired,
-}

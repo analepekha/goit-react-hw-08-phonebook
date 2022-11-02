@@ -1,7 +1,11 @@
-import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Form, Label, Input, Button} from './ContactForm.styled';
 import { useState } from 'react';
+import { addContact } from 'redux/contacts/contacts-slice';
+import { useSelector, useDispatch } from "react-redux";
+import { getContacts } from 'redux/contacts/contacts-selectors';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const initialState = {
@@ -9,8 +13,11 @@ const initialState = {
   number: '',
 }
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
   const [state, setState] = useState(initialState);
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -25,11 +32,24 @@ export const ContactForm = ({ onSubmit }) => {
     });
   };
   
+  const checkDublicateContact = ({ name, number }) => {
+    const resultOfCheck = contacts.find(contact => 
+      contact.name===name || contact.number===number
+    )
+    return resultOfCheck;
+  }
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, number } = state;
-    onSubmit({ name, number });
-    reset();
+
+    if (checkDublicateContact({name, number})) {
+      toast.error(`${name} is already in contacts`);
+      return;
+    }
+
+    const action = addContact({name, number});
+    dispatch(action);
+    reset()
   };
 
   const reset = () => {
@@ -70,8 +90,4 @@ export const ContactForm = ({ onSubmit }) => {
       <Button type="submit">Add contact</Button>
     </Form>
   )
-}
-
-ContactForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
 }
