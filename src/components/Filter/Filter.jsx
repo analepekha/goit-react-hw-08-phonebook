@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from "react-redux";
-import { getFilter } from 'redux/filter/filter-selectors';
+import { selectFilter } from 'redux/filter/filter-selectors';
 import { setFilter } from 'redux/filter/filter-slice';
 
 import { FilterWrap, LabelFilter, InputFilter } from './Filter.styled';
 
 export const Filter = () => {
 
-    const filter = useSelector(getFilter);
+    const filter = useSelector(selectFilter);
     const dispatch = useDispatch();
 
     const searchContactId = nanoid();
@@ -16,7 +16,6 @@ export const Filter = () => {
         const { value } = e.target;
         dispatch(setFilter(value));
     };
-    
 
     return(
         <FilterWrap>

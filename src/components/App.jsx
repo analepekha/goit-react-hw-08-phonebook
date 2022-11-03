@@ -3,15 +3,25 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsList } from './ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 import { Section } from './Section/Section';
-import { useSelector } from "react-redux";
-import { getContacts } from '../redux/contacts/contacts-selectors';
+import { Loader } from './Loader/Loader';
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { selectContacts, selectError, selectIsLoading } from 'redux/contacts/contacts-selectors';
+import { fetchContacts } from 'redux/contacts/contacts-operations';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 export function App() {
-  const contacts = useSelector(getContacts);
-  
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts())
+  }, [dispatch]);
+
   return (
       <Container>
         <Wrapper>
@@ -20,8 +30,10 @@ export function App() {
         </Wrapper>
         <Section title={'Contacts'}>
           <Filter />
-          {contacts.length === 0 ? (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>) :
-            (<ContactsList />)}
+          {isLoading  && <Loader/>}
+          {contacts.length === 0 && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
+          {!isLoading && contacts.length > 0 && < ContactsList />}
+          {error && <p>Ooops... Something went wrong</p>}
         </Section>
         <ToastContainer
           position="top-center"

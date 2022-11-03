@@ -26,7 +26,8 @@ export const Button = styled.button`
     background-image: linear-gradient(rgb(233 230 118 / 84%),rgb(145 112 14) 50%);
     border-radius: 10px;
     border-width: 0;
-    box-shadow: rgb(219 201 146) 0 2px 2px, rgb(147 102 34 / 27%) 0 8px 12px;    color: #FFFFFF;
+    box-shadow: rgb(219 201 146) 0 2px 2px, rgb(147 102 34 / 27%) 0 8px 12px;    
+    color: #FFFFFF;
     font-size: 10px;
     font-weight: 700;
     padding: 10px 5px;
