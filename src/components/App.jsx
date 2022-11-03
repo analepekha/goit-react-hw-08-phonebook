@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   const contacts = useSelector(selectContacts);
+  console.log(contacts.length);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
