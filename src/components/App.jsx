@@ -14,7 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function App() {
   const contacts = useSelector(selectContacts);
-  console.log(contacts.length);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
@@ -32,8 +31,8 @@ export function App() {
         <Section title={'Contacts'}>
           <Filter />
           {isLoading  && <Loader/>}
-          {contacts.length === 0 && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
-          {!isLoading && contacts.length > 0 && < ContactsList />}
+          {contacts.length === 0 && !isLoading && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
+          {contacts.length > 0 && < ContactsList />}
           {error && <p>Ooops... Something went wrong</p>}
         </Section>
         <ToastContainer
