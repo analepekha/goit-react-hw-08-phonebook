@@ -30,9 +30,9 @@ export function App() {
         </Wrapper>
         <Section title={'Contacts'}>
           <Filter />
-          {isLoading  && <Loader/>}
-          {contacts.length === 0 && !isLoading && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
-          {contacts.length > 0 && < ContactsList />}
+        {isLoading && <Loader />}
+          {contacts?.length === 0 && !isLoading && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
+          {contacts?.length > 0 && < ContactsList />}
           {error && <p>Ooops... Something went wrong</p>}
         </Section>
         <ToastContainer
