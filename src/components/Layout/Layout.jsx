@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 import { NavLink } from "react-router-dom";
 
 const Layout = () => {
@@ -13,11 +13,12 @@ const Layout = () => {
                     <NavLink to='/contacts'>Contacts</NavLink>
                 </nav>
             </header>
-            <div>
+             <Outlet />
+            {/* <div>
                 <Suspense >
                 <Outlet />
                 </Suspense>
-            </div>
+            </div> */}
 
         </>
     )
