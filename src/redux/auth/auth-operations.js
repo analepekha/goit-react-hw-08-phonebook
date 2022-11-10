@@ -38,9 +38,11 @@ export const logIn = createAsyncThunk(
     }
 )
 
-export const logOut = createAsyncThunk(async (_, thunkAPI) => {
+export const logOut = createAsyncThunk(
+    'auth/logout',
+    async (_, thunkAPI) => {
         try {
-            await axios.post('users/logout');
+            await axios.post('/users/logout');
             clearAuthHeader();
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -51,12 +53,15 @@ export const logOut = createAsyncThunk(async (_, thunkAPI) => {
 export const currentUser = createAsyncThunk(
     'auth/current',
     async (_, thunkAPI) => {
+        console.log(thunkAPI.getState());
         const state = thunkAPI.getState();
         const persistedToken = state.auth.token;
 
         if (persistedToken === null) {
             return thunkAPI.rejectWithValue('Unable to fetch user');
         }
+
+        setAuthHeader(persistedToken);
 
         try {
             const response = await axios.get('/users/current');

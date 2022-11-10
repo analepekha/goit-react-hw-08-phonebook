@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
@@ -24,15 +24,15 @@ export const ContactForm = () => {
       case 'name':
         return setName(value);
       case 'number':
-        return setPhone(value);
+        return setNumber(value);
       default:
         return;
     }
   };
   
-  const checkDublicateContact = ({ name, phone }) => {
+  const checkDublicateContact = ({ name, number }) => {
     const resultOfCheck = contacts.find(contact => 
-      contact.name===name || contact.phone===phone
+      contact.name===name || contact.phone===number
     )
     return resultOfCheck;
   }
@@ -40,19 +40,19 @@ export const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (checkDublicateContact({name, phone})) {
+    if (checkDublicateContact({name, number})) {
       toast.error(`${name} is already in contacts`);
       reset();
       return;
     }
-    const action = addContact({name, phone});
+    const action = addContact({name, number});
     dispatch(action);
     reset();
   };
 
   const reset = () => {
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
 
@@ -74,7 +74,7 @@ export const ContactForm = () => {
       <Input
         type="tel"
         name="number"
-        value={phone}
+        value={number}
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         id={numberInputId}

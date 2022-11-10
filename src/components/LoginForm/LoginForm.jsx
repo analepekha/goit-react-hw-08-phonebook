@@ -24,7 +24,7 @@ export const LoginForm = () => {
     };
 
     const onLogin = (e) => {
-        e.preventDefaults();
+        e.preventDefault();
         dispatch(logIn({ email, password }));
         reset();
     }
@@ -35,7 +35,7 @@ export const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={onLogin}>
+        <form onSubmit={onLogin} autoComplete='off'>
             <label htmlFor="">Email</label>
             <input
                 type="email"
