@@ -14,9 +14,9 @@ export const selectFilteredContacts = state => {
     }
 
     const normalizedFilter = filter.toLocaleLowerCase();
-    const filteredContacts = contacts.filter(({ name, phone }) => {
+    const filteredContacts = contacts.filter(({ name, number }) => {
         const normalizedName = name.toLocaleLowerCase();
-        const resultOfFilter = normalizedName.includes(normalizedFilter) || phone.includes(normalizedFilter);
+        const resultOfFilter = normalizedName.includes(normalizedFilter) || number.includes(normalizedFilter);
         return resultOfFilter;
     })
     return filteredContacts;

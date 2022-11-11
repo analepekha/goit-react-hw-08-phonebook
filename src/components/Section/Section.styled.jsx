@@ -7,4 +7,7 @@ export const Title = styled.h2`
 
 export const Wrapper = styled.section`
     padding: 10px;
+      max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
 `;

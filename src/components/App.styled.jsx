@@ -5,7 +5,7 @@ export const Container = styled.div`
     padding: 30px;
     padding-left: 15px;
     padding-right: 15px;
-    max-width: 400px;
+    max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
 
@@ -20,6 +20,9 @@ export const Title = styled.h1`
 `;
 
 export const Wrapper = styled.div`
+    max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
     padding: 30px;
     margin-bottom: 20px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;

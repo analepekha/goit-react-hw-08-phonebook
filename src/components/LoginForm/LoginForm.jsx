@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { logIn } from 'redux/auth/auth-operations';
+import { Form } from './LoginForm.styled';
 
 
 export const LoginForm = () => {
@@ -35,15 +36,13 @@ export const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={onLogin} autoComplete='off'>
+        <Form onSubmit={onLogin} autoComplete='off'>
             <label htmlFor="">Email</label>
             <input
                 type="email"
                 name="email"
                 value={email}
                 onChange={handleChange}
-                // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                // required
             />
             <label htmlFor="">Password</label>
             <input
@@ -51,10 +50,8 @@ export const LoginForm = () => {
                 name="password"
                 value={password}
                 onChange={handleChange}
-                // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 3}$"
-                // required
             />
             <button type='submit'>Sing in</button>
-        </form>
+        </Form>
     )
 }

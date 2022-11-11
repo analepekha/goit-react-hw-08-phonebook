@@ -1,10 +1,10 @@
-
+import { Container } from "components/App.styled";
 
 const HomePage = () => {
     return (
-        <div>
+        <Container>
             <h1>Hello! Get started!</h1>
-        </div>
+        </Container>
     )
 }
 
