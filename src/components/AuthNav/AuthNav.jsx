@@ -1,11 +1,12 @@
-import { NavLink, Menu } from './AuthNav.styled';
+import { Toolbar } from '@mui/material';
+import { NavLink } from './AuthNav.styled';
 
 export const AuthNav = () => {
     
     return (
-        <Menu>
+        <Toolbar sx={{ display: 'flex', }}>
             <NavLink to='/register'>Sing up</NavLink>
-            <NavLink to='/login'>Sing in</NavLink>
-        </Menu>
+            <NavLink to='/login' underline="none">Sing in</NavLink>
+            </Toolbar>
     );
 }

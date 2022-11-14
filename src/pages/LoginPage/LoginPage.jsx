@@ -1,10 +1,10 @@
 import { LoginForm } from "components/LoginForm/LoginForm";
-import { Container } from 'components/App.styled';
+import Container from '@mui/material/Container';
 
 
 const LoginPage = () => {
     return (
-        <Container>
+        <Container maxWidth='lg' sx={{width:'100%' }} >
             <LoginForm />
         </Container>
     )

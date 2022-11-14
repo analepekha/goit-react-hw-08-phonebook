@@ -1,9 +1,8 @@
+import { Box, TextField, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from "react-redux";
 import { selectFilter } from 'redux/filter/filter-selectors';
 import { setFilter } from 'redux/filter/filter-slice';
-
-import { FilterWrap, LabelFilter, InputFilter } from './Filter.styled';
 
 export const Filter = () => {
 
@@ -18,17 +17,22 @@ export const Filter = () => {
     };
 
     return(
-        <FilterWrap>
-        <LabelFilter htmlFor ={searchContactId} >Find contacts by name</LabelFilter>
-            <InputFilter
+        <Box component='div' sx={{mb: '15px', mt: '15px', display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'}}>
+        <Typography component='p' sx={{mb:'10px'}}>Find contacts by name</Typography>
+            <TextField
                 type="text"
                 name='filter'
                 value={filter}
                 id={searchContactId}
                 onChange={handleChangeFilter}
                 placeholder='Search'
+                variant="standard"
+                sx={{ width: '250px'}}
+                // margin="dense"
             />
-        </FilterWrap>
+        </Box>
 )
 }
 

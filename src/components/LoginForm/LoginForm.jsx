@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { logIn } from 'redux/auth/auth-operations';
-import { Form } from './LoginForm.styled';
+import { Box, Button, TextField } from "@mui/material";
 
 
 export const LoginForm = () => {
@@ -36,22 +36,26 @@ export const LoginForm = () => {
     };
 
     return (
-        <Form onSubmit={onLogin} autoComplete='off'>
-            <label htmlFor="">Email</label>
-            <input
+        <Box component="form" sx={{mt: 3, display:"flex", flexDirection: 'column', maxWidth: 400, mr:'auto', ml:'auto'}} onSubmit={onLogin} autoComplete='off'>
+            <TextField
+                sx={{mb: 2}}
                 type="email"
                 name="email"
                 value={email}
+                label="Email"
+                variant="standard"
                 onChange={handleChange}
             />
-            <label htmlFor="">Password</label>
-            <input
+            <TextField
+                sx={{mb: 2}}
                 type="password"
                 name="password"
                 value={password}
                 onChange={handleChange}
+                label="Password"
+                variant="standard"
             />
-            <button type='submit'>Sing in</button>
-        </Form>
+            <Button type='submit' variant="contained" size="medium" sx={{display:'flex', width: 100, mr:'auto', ml:'auto' }}>Sing in</Button>
+        </Box>
     )
 }

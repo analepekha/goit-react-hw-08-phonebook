@@ -1,8 +1,11 @@
 import { RegisterForm } from "components/RegisterForm/RegisterForm";
+import Container from '@mui/material/Container';
 
 const RegisterPage = () => {
     return (
-        <RegisterForm/>
+        <Container maxWidth='lg'>
+            <RegisterForm />
+        </Container>
     )
 }
 

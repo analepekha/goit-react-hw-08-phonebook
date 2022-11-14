@@ -1,11 +1,12 @@
 import { nanoid } from 'nanoid';
-import { Form, Label, Input, Button} from './ContactForm.styled';
 import { useState } from 'react';
 import { addContact } from 'redux/contacts/contacts-operations';
 import { useSelector, useDispatch } from "react-redux";
 import { selectContacts } from 'redux/contacts/contacts-selectors';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Box, Button, TextField } from '@mui/material';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
@@ -40,15 +41,16 @@ export const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (checkDublicateContact({name, number})) {
+    if (checkDublicateContact({ name, number })) {
       toast.error(`${name} is already in contacts`);
       reset();
-      return;
+      return 
     }
     const action = addContact({name, number});
     dispatch(action);
     reset();
   };
+
 
   const reset = () => {
     setName('');
@@ -57,9 +59,9 @@ export const ContactForm = () => {
 
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Label htmlFor={nameInputId}>Name</Label>
-      <Input
+    <>
+    <Box component='form' sx={{ display: 'flex', flexDirection: 'column', }} onSubmit={handleSubmit}>
+      <TextField
         type="text"
         name="name"
         value={name}
@@ -69,9 +71,10 @@ export const ContactForm = () => {
         onChange={handleChange}
         placeholder="Kate Nicolson"
         required
+        label='Name'
+        margin="dense"
       />
-      <Label htmlFor={numberInputId}>Number</Label>
-      <Input
+      <TextField
         type="tel"
         name="number"
         value={number}
@@ -81,8 +84,11 @@ export const ContactForm = () => {
         onChange={handleChange}
         placeholder='+38095-23-45-567'
         required
-      />
-      <Button type="submit">Add contact</Button>
-    </Form>
+        label='Number'
+        margin="dense"
+        />
+        <Button type="submit" variant="contained" sx={{display:'flex', width:'165px', mr:'auto', ml:'auto', mt:1}} startIcon={<AddCircleOutlinedIcon/>} >Add contact</Button>
+      </Box>
+    </>
   )
 }

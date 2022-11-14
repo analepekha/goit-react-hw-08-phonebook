@@ -1,12 +1,12 @@
+import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Title, Wrapper } from './Section.styled'; 
 
 export const Section = ({title, children}) => {
     return (
-        <Wrapper>
-            <Title>{title}</Title>
+        <Box component='div' sx={{ alignItems: 'center', mt:2 }}>
+            <Typography component='h2' variant='h4'  sx={{ textAlign: 'center' }}>{title}</Typography>
             {children}
-        </Wrapper>
+        </Box>
         )
 }
 

@@ -1,4 +1,3 @@
-import { Container, Title, Wrapper, DefaultText} from 'components/App.styled';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactsList } from 'components/ContactsList/ContactsList';
 import { Filter } from 'components/Filter/Filter';
@@ -9,7 +8,9 @@ import { useEffect } from 'react';
 import { selectContacts, selectError, selectIsLoading } from 'redux/contacts/contacts-selectors';
 import { fetchContacts } from 'redux/contacts/contacts-operations';
 import { ToastContainer } from 'react-toastify';
+import Container from '@mui/material/Container';
 import 'react-toastify/dist/ReactToastify.css';
+import { Box, Typography } from '@mui/material';
 
 const ContactsPage = () => {
 
@@ -23,15 +24,15 @@ const ContactsPage = () => {
   }, [dispatch]);
 
   return (
-      <Container>
-        <Wrapper>
-          <Title>Phonebook</Title>
+      <Container maxWidth='lg' sx={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <Box component='div' sx={{width: 400, mt: 3, p:2, backgroundColor: '#42a5f52e', boxShadow: 'rgb(166 170 188) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px' }}>
+          <Typography component='h1' variant='h2' sx={{textAlign:'center'}}>Phonebook</Typography>
           <ContactForm />
-        </Wrapper>
+        </Box>
         <Section title={'Contacts'}>
           <Filter />
         {isLoading && <Loader />}
-          {contacts?.length === 0 && !isLoading && (<DefaultText>Contacts list is empty! Try to add contact</DefaultText>)} 
+          {contacts?.length === 0 && !isLoading && (<Typography component='p'>Contacts list is empty! Try to add contact</Typography>)} 
           {contacts?.length > 0 && < ContactsList />}
           {error && <p>Ooops... Something went wrong</p>}
         </Section>

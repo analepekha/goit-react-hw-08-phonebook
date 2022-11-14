@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { register } from "redux/auth/auth-operations";
 import { useState } from 'react';
+import { Box, Button, TextField } from "@mui/material";
 
 
 export const RegisterForm = () => {
@@ -39,33 +40,39 @@ export const RegisterForm = () => {
     };
 
     return (
-        <form onSubmit={onRegister} autoComplete='off'>
-                <label htmlFor="">Name</label>
-                <input
+        <Box component="form" sx={{ mt: 3, display: "flex", flexDirection: 'column', maxWidth: 400, mr: 'auto', ml: 'auto' }} onSubmit={onRegister} autoComplete='off'>
+            <TextField
+                sx={{mb: 2}}
                     type="text"
                     name="name"
                     value={name}
                     onChange={handleChange}
+                    label="Name"
+                    variant="standard"
                     // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 />
-                <label htmlFor="">Email</label>
-                <input
+            <TextField
+                sx={{mb: 2}}
                     type="email"
                     name="email"
                     value={email}
                     onChange={handleChange}
+                    label="Email"
+                    variant="standard"
                     // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 />
-                <label htmlFor="">Password</label>
-                <input
+            <TextField
+                sx={{mb: 2}}
                     type="password"
                     name="password"
                     value={password}
                     onChange={handleChange}
+                    label="Password"
+                    variant="standard"
                     // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 3}$"
                 />
-                <button type="submit">Sing up</button>
-            </form>
+                <Button type="submit" variant="contained" size="medium" sx={{display:'flex', width: 100, mr:'auto', ml:'auto' }}>Sing up</Button>
+            </Box>
     )
 }
